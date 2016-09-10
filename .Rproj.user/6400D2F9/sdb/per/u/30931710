@@ -1,0 +1,18 @@
+{
+    "contents" : "table(overdoses$Any.Opioid)\ntable(overdoses$Heroin)\ntable(overdoses$Fentanyl)\ntable(overdoses$Methadone)\n\nheroin <- subset(overdoses, Heroin==\"Y\")\nopioid <- subset(overdoses, Any.Opioid==\"Y\")\n\nheroin_towns <- data.frame(table(heroin$Death.City))\n\ncolnames(heroin_towns) <- c(\"Town\", \"Heroin.Overdoses\")\nctnamecleaner(Town, heroin_towns, filename=\"heroin_clean\", case=\"Title\")\n\nheroin_towns <- read.csv(\"heroin_clean.csv\", stringsAsFactors=FALSE)\nheroin_t <- data.frame(tapply(heroin_towns$Heroin.Overdoses, heroin_towns$real.town.name, sum))\n\nheroin_t$Town <- rownames(heroin_t)\nrownames(heroin_t) <- NULL\ncolnames(heroin_t) <- c(\"Heroin.overdoses\", \"Town\")\nheroin_t <- heroin_t[c(\"Town\", \"Heroin.overdoses\")]\nwrite.csv(heroin_t, \"heroin_t.csv\")\n\nheroin_t <- read.csv(\"heroin_t.csv\", stringsAsFactors=FALSE)\nheroin_t$X <- NULL\n\nctpopulator(Town, heroin_t, filename=\"test\")\n\n## Opioids now\n\nopioid_towns <- data.frame(table(opioid$Death.City))\n\ncolnames(opioid_towns) <- c(\"Town\", \"opioid.Overdoses\")\nctnamecleaner(Town, opioid_towns, filename=\"opioid_clean\", case=\"Title\")\n\nopioid_towns <- read.csv(\"opioid_clean.csv\", stringsAsFactors=FALSE)\nopioid_t <- data.frame(tapply(opioid_towns$opioid.Overdoses, opioid_towns$real.town.name, sum))\n\nopioid_t$Town <- rownames(opioid_t)\nrownames(opioid_t) <- NULL\ncolnames(opioid_t) <- c(\"opioid.overdoses\", \"Town\")\nopioid_t <- opioid_t[c(\"Town\", \"opioid.overdoses\")]\nwrite.csv(opioid_t, \"opioid_t.csv\")\n\nopioid_t <- read.csv(\"opioid_t.csv\", stringsAsFactors=FALSE)\nopioid_t$X <- NULL\n\nctpop <- read.csv(\"ctpop.csv\", stringsAsFactors=FALSE)\n\nlibrary(dplyr)\n\ncolnames(ctpop) <- c(\"Town\", \"Population\")\n\noverall <- left_join(ctpop, heroin_t)\noverall <- left_join(overall, opioid_t)\n\n\n\ntrendmap(overall, headline=\"Accidental drug overdoes by town\", subhead=\"Between 2012 and Sept. 2015\",\n         src=\"State Medical Examiner's Office\", byline=\"TrendCT.org\", url_append=\"date\", shape=\"towns\", color=\"yellow-red\")\n\n\noverall$Heroin.percapita <- round(overall$Heroin.overdoses/overall$Population*1000,2)\noverall$Opioid.percapita <- round(overall$opioid.overdoses/overall$Population*1000,2)\n\nwrite.csv(overall, \"overall.csv\")\n",
+    "created" : 1450727596323.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "140685745",
+    "id" : "30931710",
+    "lastKnownWriteTime" : 5558040213859099424,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

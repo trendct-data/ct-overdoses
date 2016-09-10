@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1450729476762.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A8729E14",
+    "lastKnownWriteTime" : 37446471691141251,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "tai5y47cno",
+        "caption" : "overall",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=overall&cache_key=tai5y47cno",
+        "displayedObservations" : "169",
+        "environment" : "",
+        "object" : "overall",
+        "totalObservations" : "169",
+        "variables" : "6"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}
